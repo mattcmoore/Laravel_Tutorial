@@ -4,11 +4,8 @@
     <title></title>
 </head>
 <body>
-    <ul>
-    @foreach ($tasks as $task)
-        <li> {{ $task->body }} </li> 
-    @endforeach
-    </ul>
-</body>
+ 	<h1>{{ $task->body }}</h1>
+ </body>
+
 </html>
         
