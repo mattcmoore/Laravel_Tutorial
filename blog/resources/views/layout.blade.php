@@ -1,12 +1,12 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="UTF-8">
 	<title>My Application</title>
 </head>
-<body>
-
-	<div>
-		@yeild('content')
+<body>  
+	<div class="container">
+		@yield('content')	
 	</div>
 </body>
 </html>
