@@ -1,6 +1,3 @@
-@extends('layout')
-
-@section('content')
 <div class="col-sm-3 offset-sm-1 blog-sidebar">
   <div class="sidebar-module sidebar-module-inset">
     <h4>About</h4>
@@ -32,4 +29,3 @@
     </ol>
   </div>
 </div><!-- /.blog-sidebar -->
-@endsection
