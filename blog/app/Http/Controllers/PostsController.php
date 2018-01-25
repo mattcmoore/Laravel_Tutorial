@@ -16,8 +16,13 @@ class PostsController extends Controller
     	return view('posts.create');
     }
     public function store(){
+    	$this->validate(request(),[
+					"title" => "required",
+					"body" => "required"
+		]);
+
     	// Create a new post using request data
-    	$post = new \App\Post;
+    	//$post = new \App\Post;
     	//$post->title = request('title');
     	//$post->body = request('body');
     	// Save it to database
