@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+//use Illuminate\Http\Request;
+use App\Post;
 class PostsController extends Controller
 {
     public function index(){
    
-    	$posts = \App\Post::latest()->get();
+    	$posts = Post::latest()->get();
     
     	return view( 'posts.index', compact('posts') );
     }
-    public function show(\App\Post $post){
+    public function show(Post $post){
    		 	
     	return view('posts.show', compact('post'));
     }
