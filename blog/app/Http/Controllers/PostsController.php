@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
     public function index(){
-    	return view('posts.index');
+   
+    	$posts = \App\Post::latest()->get();
+    
+    	return view( 'posts.index', compact('posts') );
     }
-    public function show(){
-    	return view('posts.show');
+    public function show(\App\Post $post){
+   		 	
+    	return view('posts.show', compact('post'));
     }
     public function create(){
     	return view('posts.create');
@@ -20,16 +24,7 @@ class PostsController extends Controller
 					"title" => "required",
 					"body" => "required"
 		]);
-
-    	// Create a new post using request data
-    	//$post = new \App\Post;
-    	//$post->title = request('title');
-    	//$post->body = request('body');
-    	// Save it to database
-    	//$post->save();
-
-    	// active record request 
-    	\App\Post::create(['title' => request('title'),'body' => request('body')
+    	Post::create(['title' => request('title'),'body' => request('body')
     	]);
     	
     	// Redirect somewhere in application
