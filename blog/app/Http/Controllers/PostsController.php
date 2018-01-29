@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
+
 use App\Post;
+
+use Carbon\Carbon;
+
 class PostsController extends Controller
 {
     public function _construct(){
@@ -13,9 +17,35 @@ class PostsController extends Controller
 
     public function index()
     {
-    	$posts = Post::latest()->get();
-    
-    	return view( 'posts.index', compact('posts') );
+    	$posts = Post::latest()
+            ->filter( request(['month','year']) )
+            ->get();
+
+/*  
+        
+        // request comes from query string in archive link 
+        if ($month = request('month') )
+        {
+            $posts->whereMonth('created_at', Carbon::parse($month)->month);
+        }
+
+        if ( $year = request('year') )
+        {
+            $posts->whereYear('created_at', $year);
+        }
+
+        $posts = $posts->get();
+
+*/
+        
+        // built from sql query that pulls year, month and count(*) and groups by year and month
+        $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+            ->groupBy('year','month')
+            ->orderByRaw('min(created_at) desc')
+            ->get()
+            ->toArray();
+ 
+       return view( 'posts.index', compact('posts','archives') );
     }
     
     public function show(Post $post){
