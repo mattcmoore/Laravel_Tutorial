@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Post extends Eloquent
 {
 	// $fillable limits what can be passed to posts_table i.e. create() 
-   protected $fillable = ['title','body'];
+   protected $fillable = ['title','body','user_id'];
 
    public function comments()
    {
@@ -26,5 +26,10 @@ class Post extends Eloquent
 		*/
 		// using the comments() 'class relationship' method
 		$this->comments()->create(compact('body'));
+   }
+
+   public function user()
+   {
+      return $this->belongsTo(User::class);
    }
 }
