@@ -14,15 +14,15 @@ class Post extends Eloquent
    public function comments()
   
    {
-   		// Comment::class === '\app\Comment'
-   		return $this->hasMany(Comment::class);
+   	// Comment::class === '\app\Comment'
+   	return $this->hasMany(Comment::class);
    }
 
    public function addComment($body)
   
    {
       // using the comments() 'class relationship' method
-      $this->comments()->create(compact('body'));
+      $this->comments()->create( compact('body') );
 
 /*
    		// this is for use on the CommentsController expressions $this->addComment(request('body'))
@@ -37,24 +37,34 @@ class Post extends Eloquent
    public function scopeFilter($query, $filters)
 
    {  
-         if ( $month = $filters['month'] )
-         // request comes from query string in archive link       
-         {
-            $query->whereMonth('created_at', Carbon::parse($month)->month);
-         }
+      if ( $month = $filters['month'] )
+      // request comes from query string in archive link       
+      {
+         $query->whereMonth('created_at', Carbon::parse($month)->month);
+      }
 
-         if ( $year = $filters['year'] )
-         
-         {
-            $query->whereYear('created_at', $year);
-         }
+      if ( $year = $filters['year'] )
+      
+      {
+         $query->whereYear('created_at', $year);
+      }
 
    }
 
    public function user()
   
    {
-      return $this->belongsTo(User::class);
+     return $this->belongsTo(User::class);
+   }
+
+   public static function archives()
+
+   {
+      return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+            ->groupBy('year','month')
+            ->orderByRaw('min(created_at) desc')
+            ->get()
+            ->toArray();
    }
 
 }

@@ -17,12 +17,16 @@ class PostsController extends Controller
 
     public function index()
     {
+/*
+      
     	$posts = Post::latest()
             ->filter( request(['month','year']) )
             ->get();
 
-/*  
-        
+ 
+*/
+    $posts = \App\Post::latest();
+
         // request comes from query string in archive link 
         if ($month = request('month') )
         {
@@ -33,19 +37,10 @@ class PostsController extends Controller
         {
             $posts->whereYear('created_at', $year);
         }
-
-        $posts = $posts->get();
-
-*/
-        
-        // built from sql query that pulls year, month and count(*) and groups by year and month
-        $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
-            ->groupBy('year','month')
-            ->orderByRaw('min(created_at) desc')
-            ->get()
-            ->toArray();
  
-       return view( 'posts.index', compact('posts','archives') );
+        $posts = $posts->get();
+ 
+       return view( 'posts.index', compact('posts') );
     }
     
     public function show(Post $post){
