@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         /*
-         * view composer in the boot() method, where when 'layouts.sidebar' is included, a callback will load Post:      * archives() to view (which returns all the archives data needed to run 'layouts.sidebar' * in a given view)
+         * view composer in the boot() method, binds $archives to any view in the blog that includes the 'layouts.sidebar' so that they can always be accessed  
          */
         
         view()->composer('layouts.sidebar', function($view){

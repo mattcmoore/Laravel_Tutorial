@@ -20,4 +20,4 @@
 
     {{ $post->body }}
   
-</div><!-- /.blog-post
+</div> <!-- /.blog-post -->
